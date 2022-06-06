@@ -1,18 +1,22 @@
-const express = require("express");
-const { route } = require("express/lib/application");
-const authController = require("../controllers/authController")
+const authController = require('../controllers/authController'),
+	express = require('express'),
+	passport = require('passport'),
+	router = express.Router(),
+	User = require('../model/user'),
+	{ route } = require('express/lib/application');
 
-const router = express.Router();
-
-router.get("/login", authController.getLogin);
-
-router.get("/signup", (req, res) => {
-    res.render("signup");
-});
-
-router.post("/signup", authController.postSignUp);
-router.post("/login",authController.postLogin)
-
-router.get("/logout", authController.logout)
+router.get('/login', authController.getLoginForm);
+router.get('/signup', authController.getRegisterForm);
+router.post('/signup', authController.registerUser);
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		successFlash: 'Welcome back',
+		failureFlash: true,
+		failureRedirect: '/login'
+	}),
+	authController.loginUser
+);
+router.get('/logout', authController.logoutUser);
 
 module.exports = router;

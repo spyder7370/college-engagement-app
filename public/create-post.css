@@ -1,24 +1,21 @@
-body{
-
-    background-color: rgb(46, 33, 157);
-
-}
-h3{
+h3 {
     text-align: center;
     font-size: 40px;
     color: burlywood;
 }
-form{
+
+form {
     margin: 0% 10%;
     padding: 10px;
     background-color: rgb(21, 84, 244);
 
 }
-div{
+
+div {
     text-align: center;
 }
 
-#content{
+#content {
     background-color: rgb(77, 77, 172);
     border-radius: 20px;
     padding: 20px;
@@ -26,44 +23,51 @@ div{
     width: 90%;
     color: white;
 }
-#submit{
+
+#submit {
     background-color: blueviolet;
     margin: 10px;
 }
-#title{
+
+#title {
     width: 90%;
     padding: 10px;
 }
 
-p{
+p {
     font-size: 30px;
     font-style: oblique;
     text-align: center;
 }
 
-#interview{
-    
+#interview {
+
     margin: 0% 5%;
     padding: 1%;
     display: inline-block;
 }
-#blog{
-    
+
+#blog {
+
     margin: 0% 5%;
     padding: 1%;
     display: inline-block;
 }
-#notice{
+
+#notice {
     margin: 0% 5%;
     padding: 1%;
     display: inline-block;
 }
-#interview:hover{
+
+#interview:hover {
     background-color: rgb(210, 198, 198);
 }
-#blog:hover{
+
+#blog:hover {
     background-color: rgb(210, 198, 198);
 }
-#notice:hover{
+
+#notice:hover {
     background-color: rgb(210, 198, 198);
 }

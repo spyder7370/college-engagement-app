@@ -1,0 +1,42 @@
+<%- include('../partials/userHeader') %>
+
+<h1 class="text-center font-monospace my-3 text-uppercase">Edit user <%= user.username %> </h1>
+<div class="row">
+    <!-- email
+    name
+    avatar
+    about
+    username -->
+    <div class="col-12 d-flex justify-content-center">
+        <form action="/users/<%= user._id %>?_method=PUT" method="post" class="my-5 needs-validation"
+            style="width: 40%;" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="email" class="form-label">User Email</label>
+                <input type="email" class="form-control" id="email" name="user[email]" value="<%= user.email %>"
+                    disabled>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="title" name="user[username]" value="<%= user.username %>"
+                    disabled>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="title" name="user[name]" value="<%= user.name %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="avatar" class="form-label">User Avatar</label>
+                <input class="form-control" type="file" name="image" id="avatar">
+            </div>
+            <div class="mb-3">
+                <label for="about" class="form-label">About Me</label>
+                <textarea required class="form-control" name="user[about]" id="about" cols="5" rows="5"><%= user.about %>
+                </textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Edit post</button>
+        </form>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

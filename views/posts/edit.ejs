@@ -1,0 +1,77 @@
+<% if (type === 'blog') { %>
+<%- include('../partials/blogHeader') %>
+<% } else { %>
+<%- include('../partials/interviewHeader') %>
+<% } %>
+
+<link rel="stylesheet" href="/form.css">
+<h1 class="text-center font-monospace my-3 text-uppercase">Edit post <%= post.title %> </h1>
+<div class="row">
+    <div class="col-12 d-flex justify-content-center">
+        <form action="/posts/<%= type %>/<%= post._id %>?_method=PUT" method="post" class="my-5 needs-validation"
+            style="width: 40%;" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Post Title</label>
+                <input type="text" class="form-control" id="title" name="post[title]" value="<%= post.title %>"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="type">Post Type</label>
+                <select name="post[type]" class="form-select" id="type" required>
+                    <option value="blog" selected>Select type of post . . .</option>
+                    <option value="blog">Blog</option>
+                    <option value="interview-experience">Interview Experience</option>
+                    <option value="notice">Notice</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Post Image</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="imageType" id="imageTypeLabel1"
+                        value="recommendations">
+                    <label class="form-check-label" for="imageTypeLabel1">
+                        Choose a picture from the recommendations
+                    </label>
+                </div>
+                <div class="auto-img row">
+                    <% if (imgs.length === 0) { %>
+                    <div class="my-2 fst-italic">No results found</div>
+                    <% } else { %>
+                    <div class="my-2 fst-italic">(Refresh the page for more results)</div>
+                    <% for(let img of imgs){ %>
+                    <div class="col-lg-4 col-md-4">
+                        <label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input img-radio" type="radio" name="post[image]"
+                                    value="<%=img%>">
+                                <img class="img-fluid" src="<%=img%>" alt="">
+                            </div>
+                        </label>
+                    </div>
+                    <% } %>
+                    <% } %>
+                </div>
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="radio" name="imageType" id="imageTypeLabel2" value="custom">
+                    <label class="form-check-label" for="imageTypeLabel2">
+                        Or upload your own picture
+                    </label>
+                </div>
+                <div class="mt-3 custom-img">
+                    <input type="file" class="form-control" name="image" id="">
+                </div>
+                <!-- <input type="text" class="form-control" id="image" name="post[image]" value=""> -->
+
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Post Content</label>
+                <textarea required class="form-control" name="post[content]" id="content" cols="5" rows="5"><%= post.content %>
+                </textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Edit post</button>
+        </form>
+    </div>
+</div>
+
+<script src="/scripts/form.js"></script>
+<%- include('../partials/footer') %>

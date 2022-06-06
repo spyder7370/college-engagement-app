@@ -1,45 +1,42 @@
-const User = require("../model/user")
+const User = require('../model/user');
 
-exports.logout = (req, res) => {
-    req.session.isLoggedIn = false;
-    res.redirect("/");
-}
+module.exports.getLoginForm = (req, res) => {
+	res.render('auth/login');
+};
 
-exports.postSignUp = async (req, res) => {
-    let fullName = req.body.fullName,
-        email = req.body.email,
-        password = req.body.password;
+module.exports.getRegisterForm = (req, res) => {
+	res.render('auth/signup');
+};
 
-    let username = email.split("@")[0]
-    
-    const user = await User.create({
-        name: fullName,
-        email,
-        password,
-        admin: true,
-        username: username,
-        posts: [{}]
-    })
+module.exports.registerUser = async (req, res) => {
+	try {
+		const { email, username, password } = req.body;
+		// const username = email.split('@')[0];
+		const user = await new User({ email, username });
+		const registeredUser = await User.register(user, password);
+		// console.log(registeredUser);
+		// user.name = fullName;
+		await user.save();
+		req.login(registeredUser, (err) => {
+			if (err) {
+				req.flash('error', 'Some error occured while authenticating');
+				return res.redirect('/signup');
+			}
+			req.flash('success', `Welcome ${username}`);
+			res.redirect('/');
+		});
+	} catch (err) {
+		req.flash('error', err.message);
+		res.redirect('/signup');
+	}
+};
 
-    // console.log(user)
-    req.session.isLoggedIn = true;
-    res.render("/");
-}
+module.exports.loginUser = (req, res) => {
+	res.redirect('/');
+};
 
-exports.postLogin = async (req, res) => {
-    console.log(req.body.email, req.body.password)
-    let user = await User.findOne({email: req.body.email, password: req.body.password});
-
-    if (user) {
-        req.session.isLoggedIn = true;
-        res.redirect("/");
-    } else 
-        res.send("Wrong input")
-
-    
-
-}
-
-exports.getLogin = (req, res) => { // res.setHeader('Set-Cookie','isLogged=True')
-    res.render("login");
-}
+module.exports.logoutUser = (req, res) => {
+	req.logout();
+	req.flash('success', 'See you later');
+	res.redirect('/');
+};

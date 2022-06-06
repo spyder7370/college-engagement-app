@@ -1,0 +1,102 @@
+<% if (type === 'blog') { %>
+<%- include('../partials/blogHeader') %>
+<% } else if(type === 'notice') { %>
+<%- include('../partials/noticeHeader') %>
+<% } else { %>
+<%- include('../partials/interviewHeader') %>
+<% } %>
+<link rel="stylesheet" href="/stars.css">
+<link rel="stylesheet" href="/show.css">
+<div class="container">
+    <div class="row my-5">
+        <div class="col-lg-6">
+            <div class="card mb-5">
+                <img src="<%= post.image %>" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%=post.title%>
+                    </h5>
+                    <p class="card-text">
+                        <%= post.content %>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <% if (currentUser && post.author.equals(currentUser._id)) { %>
+                    <a class="card-link btn btn-warning" href="/posts/<%= type %>/<%= post._id %>/edit">Edit</a>
+                    <form class="card-link d-inline" action="/posts/<%= type %>/<%= post._id %>?_method=DELETE"
+                        method="post">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %>
+                    <a class="card-link btn btn-primary" href="/posts/<%= type %>">Go Back</a>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between border-top-0">
+                    <div class="views"><%= post.date.toDateString() %> by <a class="text-decoration-none"
+                            href="/users/<%= post.author._id %>"><%= post.author.username %></a>
+                    </div>
+                    <div class="stats">
+                        <a class="like-link <%= likeExists %> " href="/posts/<%= type %>/<%= post._id %>/upvote"><i
+                                class="fa-solid fa-heart"></i> <%= post.upvotes.length %></a>
+                        <a class="like-link <%= dislikeExists %> " href="/posts/<%= type %>/<%= post._id %>/downvote"><i
+                                class="fa-solid fa-heart-crack"></i>
+                            <%= post.downvotes.length %></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container">
+                <h3 class="font-monospace text-uppercase">Leave a comment</h3>
+                <form action="/posts/<%= type %>/<%= post._id %>/comments" method="post" class="needs-validation my-3"
+                    novalidate>
+                    <!-- <div class="mb-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="range" min="1" max="5" id="rating" class="form-range" name="review[rating]" />
+                </div> -->
+                    <fieldset class="starability-basic mb-3">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="1" checked
+                            aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                    <div class="mb-3">
+                        <label class="form-label" for="body">Comment Text</label>
+                        <textarea class="form-control" name="comment[body]" id="body" cols="5" rows="3"
+                            required></textarea>
+                    </div>
+                    <button class="btn btn-success">Add Comment</button>
+                </form>
+                <% for(let comment of post.comments){ %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">By <%= comment.author.username %>
+                        </h6>
+                        <p class="card-title starability-result" data-rating="<%= comment.rating %>">
+                            Rated: <%= comment.rating %> stars
+                        </p>
+                        <hr>
+                        <p class="card-text"><%= comment.body %>
+                        </p>
+                        <% if (currentUser && comment.author.equals(currentUser._id)) { %>
+                        <form action="/posts/<%= type %>/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
+                            method="post">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>

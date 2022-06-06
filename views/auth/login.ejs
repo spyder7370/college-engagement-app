@@ -6,25 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/login.css" />
-    <title>Sign in & Sign up Form</title>
+    <title>Login</title>
 </head>
 
 <body>
+    <% if(success && success.length){ %>
+    <div class="alert alert-info alert-dismissable">
+        <%= success %>
+    </div>
+    <% } %>
+
+    <% if(error && error.length){ %>
+    <div class="alert alert-danger alert-dismissable">
+        <%= error %>
+    </div>
+    <% } %>
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="/login" method="POST" class="sign-in-form">
+                <form action="/login" method="POST" class="sign-in-form needs-validation" novalidate>
                     <h2 class="title">Sign in</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="email" placeholder="Email" />
+                        <input type="text" name="username" placeholder="Username" required />
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" />
+                        <input type="password" name="password" placeholder="Password" required />
                     </div>
                     <input type="submit" value="Login" class="btn solid" />
-                    <p class="social-text">Or Sign in with social platforms</p>
+                    <!-- <p class="social-text">Or Sign in with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
                             <i class="fab fa-facebook-f"></i>
@@ -38,7 +49,7 @@
                         <a href="#" class="social-icon">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
@@ -48,11 +59,13 @@
                 <div class="content">
                     <h3>New here ?</h3>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                        ex ratione. Aliquid!
+                        Join the community by registering yourself here
                     </p>
-                    <button class="btn transparent" id="sign-up-btn">
+                    <button onclick="location.href='/signup'" class="btn transparent" id="sign-up-btn">
                         Sign up
+                    </button>
+                    <button onclick="location.href='/'" class="btn transparent" id="sign-up-btn">
+                        Go Back
                     </button>
                 </div>
                 <img src="img/log.svg" class="image" alt="" />
@@ -73,7 +86,14 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        window.setTimeout(function () {
+            $('.alert').fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+                $('.flash-container').remove();
+            });
+        }, 3000);
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,30 @@
+<%- include('../partials/newHeader') %>
+
+<h1 class="text-center font-monospace my-3 text-uppercase">Add a new post</h1>
+<div class="row">
+    <div class="col-12 d-flex justify-content-center">
+        <form action="/posts" method="post" class="my-5 needs-validation" style="width: 40%;" novalidate>
+            <div class="mb-3">
+                <label for="title" class="form-label">Post Title</label>
+                <input type="text" class="form-control" id="title" name="post[title]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="type">Post Type</label>
+                <select name="post[type]" class="form-select" id="type" required>
+                    <option value="blog" selected>Select type of post . . .</option>
+                    <option value="blog">Blog</option>
+                    <option value="interview-experience">Interview Experience</option>
+                    <option value="notice">Notice</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Post Content</label>
+                <textarea required class="form-control" name="post[content]" id="content" cols="5" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Add a post</button>
+        </form>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

@@ -1,11 +1,20 @@
-.navbar{
-    background-color: rgb(26,57,99);
-    
+.navbar {
+    background-color: rgb(26, 57, 99);
+    /* position: inherit; */
+
 }
-.nav-link{
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom: 0.2rem solid transparent;
+}
+
+.nav-link:hover {
     color: white;
+    border-bottom: 0.2rem solid white;
 }
-.logo-image{
+
+.logo-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -13,9 +22,43 @@
     margin-top: -6px;
     margin-left: 40px;
 }
-#navmain{
-    margin-left: 100px;
+
+#nav-start {
+    margin-left: 4rem;
 }
-.navitem{
-    padding:0px 200px ;
+
+.active {
+    color: white;
+    border-bottom: 0.2rem solid white;
+}
+
+#nav-end {
+    margin-right: 4rem;
+}
+
+span.nav-link:hover {
+    border-bottom: none;
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.navitem {
+    padding: 0px 200px;
+}
+
+footer {
+    background: rgb(26, 57, 99);
+}
+
+.footer-links {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links:hover {
+    text-decoration: none;
+    color: white;
 }
