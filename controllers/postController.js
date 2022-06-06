@@ -7,11 +7,53 @@ function escapeRegex(text) {
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
+// module.exports.indexAll = async (req, res) => {
+// 	const posts = await Post.find({}).populate('author');
+// 	if (!posts) return res.redirect('/404');
+// 	const type = 'Post';
+// 	res.render('posts/index.ejs', { posts, type });
+// };
+
 module.exports.indexAll = async (req, res) => {
-	const posts = await Post.find({}).populate('author');
+	const posts = await Post.paginate(
+		{},
+		{
+			page: req.query.page || 1,
+			limit: 10,
+			sort: '-_id'
+		}
+	);
 	if (!posts) return res.redirect('/404');
+	posts.page = Number(posts.page);
+	let totalPages = posts.totalPages;
+	let currentPage = posts.page;
+	let startPage;
+	let endPage;
+
+	if (totalPages <= 10) {
+		startPage = 1;
+		endPage = totalPages;
+	} else {
+		if (currentPage <= 6) {
+			startPage = 1;
+			endPage = 10;
+		} else if (currentPage + 4 >= totalPages) {
+			startPage = totalPages - 9;
+			endPage = totalPages;
+		} else {
+			startPage = currentPage - 5;
+			endPage = currentPage + 4;
+		}
+	}
 	const type = 'Post';
-	res.render('posts/index.ejs', { posts, type });
+	res.render('posts/index', {
+		posts,
+		type,
+		startPage,
+		endPage,
+		currentPage,
+		totalPages
+	});
 };
 
 module.exports.searchPost = async (req, res) => {
@@ -56,10 +98,49 @@ module.exports.indexType = async (req, res) => {
 		return res.redirect('/404');
 	}
 	try {
-		const posts = await Post.find({ type: type }).populate('author');
-		res.render('posts/index', { posts, type });
+		// const posts = await Post.find({ type: type }).populate('author');
+		const posts = await Post.paginate(
+			{ type: type },
+			{
+				page: req.query.page || 1,
+				limit: 12,
+				sort: '-_id',
+				populate: 'author'
+			}
+		);
+		if (!posts) return res.redirect('/404');
+		posts.page = Number(posts.page);
+		let totalPages = posts.totalPages;
+		let currentPage = posts.page;
+		let startPage;
+		let endPage;
+
+		if (totalPages <= 10) {
+			startPage = 1;
+			endPage = totalPages;
+		} else {
+			if (currentPage <= 6) {
+				startPage = 1;
+				endPage = 10;
+			} else if (currentPage + 4 >= totalPages) {
+				startPage = totalPages - 9;
+				endPage = totalPages;
+			} else {
+				startPage = currentPage - 5;
+				endPage = currentPage + 4;
+			}
+		}
+		res.render('posts/index', {
+			posts,
+			type,
+			startPage,
+			endPage,
+			currentPage,
+			totalPages
+		});
 	} catch (error) {
-		req.flash('error', 'An error occured in the database');
+		console.log(error.message);
+		req.flash('error', 'Something went wrong in the database');
 		res.redirect('back');
 	}
 };

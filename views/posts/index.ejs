@@ -12,7 +12,8 @@
     <% if (posts.length === 0) { %>
     <h3>Nothing to show here</h3>
     <% } else { %>
-    <% for( let post of posts ) { %>
+    <%- include('../partials/paginate')%>
+    <% for( let post of posts.docs ) { %>
     <div class="notice-box">
         <h3><%= post.title %></h3>
         <p><%= post.content.slice(0,100) %></p>
@@ -20,6 +21,7 @@
             data-bs-content="<%= post.content %>">Read More . . .</button>
     </div>
     <% } %>
+    <%- include('../partials/paginate')%>
     <% } %>
 </div>
 
@@ -32,7 +34,8 @@
         <% if (posts.length === 0) { %>
         <h3>Nothing to show here</h3>
         <% } else { %>
-        <% for( let post of posts ) { %>
+        <%- include('../partials/paginate')%>
+        <% for( let post of posts.docs ) { %>
         <div class="col-12 col-sm-8 col-md-6 col-lg-4">
             <div class="card mb-3">
                 <img class="card-img" src="<%= post.image %>" alt="">
@@ -60,6 +63,7 @@
             </div>
         </div>
         <% } %>
+        <%- include('../partials/paginate')%>
         <% } %>
     </div>
 </div>

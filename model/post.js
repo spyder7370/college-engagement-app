@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
-	Comment = require('./comment');
+	Comment = require('./comment'),
+	mongoosePaginate = require('mongoose-paginate-v2');
 
 const postSchema = new mongoose.Schema({
 	title: {
@@ -56,4 +57,6 @@ postSchema.post('findOneAndDelete', async (doc) => {
 		});
 	}
 });
+
+postSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Post', postSchema);
