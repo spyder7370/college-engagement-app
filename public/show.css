@@ -1,0 +1,11 @@
+.like-link,
+.like-link:hover {
+    margin: 0 0.2rem;
+    text-decoration: none;
+    color: gray;
+}
+
+.like-link.selected {
+    text-decoration: none;
+    color: rgb(255, 21, 0);
+}

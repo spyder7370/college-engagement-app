@@ -1,0 +1,72 @@
+<% if (type === 'blog') { %>
+<%- include('../partials/blogHeader') %>
+<% } else if(type === 'notice') { %>
+<%- include('../partials/noticeHeader') %>
+<% } else { %>
+<%- include('../partials/interviewHeader') %>
+<% } %>
+<% if (type === 'notice') { %>
+<link rel="stylesheet" href="/notice.css">
+<div class="container">
+    <h1 class="text-center font-monospace mt-3 text-uppercase">All <%= type %>s </h1>
+    <% if (posts.length === 0) { %>
+    <h3>Nothing to show here</h3>
+    <% } else { %>
+    <%- include('../partials/paginate')%>
+    <% for( let post of posts.docs ) { %>
+    <div class="notice-box">
+        <h3><%= post.title %></h3>
+        <p><%= post.content.slice(0,100) %></p>
+        <button type="button" class="btn btn-success" data-bs-toggle="popover" title="<%= post.title %>"
+            data-bs-content="<%= post.content %>">Read More . . .</button>
+    </div>
+    <% } %>
+    <%- include('../partials/paginate')%>
+    <% } %>
+</div>
+
+<% } else { %>
+
+<link rel="stylesheet" href="/blog.css">
+<div class="container">
+    <h1 class="text-center font-monospace my-3 text-uppercase">All <%= type %>s </h1>
+    <div class="row">
+        <% if (posts.length === 0) { %>
+        <h3>Nothing to show here</h3>
+        <% } else { %>
+        <%- include('../partials/paginate')%>
+        <% for( let post of posts.docs ) { %>
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <img class="card-img" src="<%= post.image %>" alt="">
+                <div class="card-body">
+                    <h4 class="card-title"><%= post.title %></h4>
+                    <small class="text-muted cat">
+                        <i class="far fa-clock text-info"></i> 30 minutes
+                    </small>
+                    <small class="text-muted cat">
+                        <i class="fa-solid fa-filter text-info"></i>
+                        <a class="type-link" href="/posts/<%= post.type %>"><%= post.type %></a>
+                    </small>
+                    <p class="card-text"><%= post.content.slice(0,100) %> . . . </p>
+                    <a href="/posts/<%= post.type %>/<%= post._id %>" class="btn btn-info">Read More</a>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                    <div class="views"><%= post.date.toDateString() %> by <a class="text-decoration-none"
+                            href="/users/<%= post.author._id %>"><%= post.author.username %></a>
+                    </div>
+                    <div class="stats">
+                        <i class="fa-solid fa-heart"></i> <%= post.upvotes.length %>
+                        <i class="fa-solid fa-heart-crack"></i> <%= post.downvotes.length %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <%- include('../partials/paginate')%>
+        <% } %>
+    </div>
+</div>
+<% } %>
+
+<%- include('../partials/footer') %>

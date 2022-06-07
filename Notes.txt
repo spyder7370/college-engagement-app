@@ -1,0 +1,76 @@
+// Express - framework
+// Middleware
+// Req , Res
+// Routing
+// Return HTML pages (File)
+
+// Server side logic
+// Store products in cart
+// Post pics , like photos
+
+// Mongodb
+// mongoose
+// Use in this project
+
+Sessions & cookies
+Authentication
+
+RDBMS / DBMS
+SQL / NOSQL
+
+Student - Table
+Name Roll Course Batch EMail
+Mukul 11 
+
+
+NOSQL - Mongodb, firebase , dynamodb
+Student - Collection
+{
+    Name : "Mukul",
+    Roll : 11,
+    Course : "DBMS"
+},
+{
+    Name: "Nitin"
+},
+{
+    Name:",
+    Roll:,
+    EMail
+}
+
+{
+    Name: String,
+    Email : String 
+}
+
+cart : [{image:,title:,cost:}]
+
+
+// Front end
+
+// Back end 
+// Cookie - stored on client side 
+// Session - stored on server side
+
+// npm init
+// npm install
+// Templating EJS
+// Dynamic routing
+// MVC
+// REST API
+// npm i ejs
+
+// Model View             Controller
+// Data  What users sees  Connecting models to views
+// Products - id , name ,cost , size
+// User - id , name , orders , email , mob no.
+// Order - id , user , cost , discount
+// Order = [{id:"abc",user:"Mukul",cost:500,discount:10%},{}]
+
+// HTML - EJS,inlcude header and footer
+// correct links in header
+// Controllers for create.js , register , search
+
+
+// Cookie & session & session why stored in database

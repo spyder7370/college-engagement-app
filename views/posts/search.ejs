@@ -1,0 +1,73 @@
+<%- include('../partials/searchHeader') %>
+
+<link rel="stylesheet" href="/blog.css">
+<div class="container">
+    <h1 class="text-center font-monospace my-3 text-uppercase">All <%= type %>s </h1>
+    <div class="row">
+        <% if (posts.length === 0) { %>
+        <h3>Nothing to show here</h3>
+        <div class="row">
+            <div class="col-sm-12 col-lg-8 offset-lg-2 ">
+                <form action="/posts" method="get" class="my-4 mx-auto">
+                    <div class="input-group">
+                        <select style="max-width: 11em;" name="type" class="form-select">
+                            <option value="post" selected>Type</option>
+                            <option value="notice">Notice</option>
+                            <option value="interview-experience">Interview-Experience</option>
+                            <option value="blog">Blog</option>
+                        </select>
+                        <input placeholder="Title . . ." type="text" name="search" class="form-control">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <% } else { %>
+        <div class="row">
+            <div class="col-sm-12 col-lg-8 offset-lg-2 ">
+                <form action="/posts" method="get" class="my-4 mx-auto">
+                    <div class="input-group">
+                        <select style="max-width: 11em;" name="type" class="form-select">
+                            <option value="post" selected>Type</option>
+                            <option value="notice">Notice</option>
+                            <option value="interview-experience">Interview-Experience</option>
+                            <option value="blog">Blog</option>
+                        </select>
+                        <input placeholder="Title . . ." type="text" name="search" class="form-control">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <% for( let post of posts ) { %>
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <img class="card-img" src="<%= post.image %>" alt="">
+                <div class="card-body">
+                    <h4 class="card-title"><%= post.title %></h4>
+                    <small class="text-muted cat">
+                        <i class="far fa-clock text-info"></i> 30 minutes
+                    </small>
+                    <small class="text-muted cat">
+                        <i class="fa-solid fa-filter text-info"></i>
+                        <a class="type-link" href="/posts/<%= post.type %>"><%= post.type %></a>
+                    </small>
+                    <p class="card-text"><%= post.content.slice(0,100) %> . . . </p>
+                    <a href="/posts/<%= post.type %>/<%= post._id %>" class="btn btn-info">Read More</a>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                    <div class="views"><%= post.date.toDateString() %> by <%= post.author.username %>
+                    </div>
+                    <div class="stats">
+                        <i class="fa-solid fa-heart"></i> <%= post.upvotes.length %>
+                        <i class="fa-solid fa-heart-crack"></i> <%= post.downvotes.length %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

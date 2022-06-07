@@ -1,0 +1,54 @@
+<%- include('../partials/userHeader'); -%>
+<link rel="stylesheet" href="/user.css">
+<div class="container">
+    <div class="row mt-2 mb-5">
+        <div class="col-lg-4 col-md-6">
+            <h2 id="user-profile" class="font-monospace text-center"><%= user.name%>'s Profile</h2>
+            <hr>
+            <div class="user-card card mt-4">
+                <div style="background-image: url(<%= user.avatar%>);" class="card-img-top"></div>
+                <div class="img-card-body card-body">
+                    <h5 class="card-title"><i class="far fa-envelope"></i> <a class=" text-decoration-none text-dark"
+                            href="mailto:<%=user.email%>"><%=user.email%></a></h5>
+                </div>
+            </div>
+            <div class="user-card card">
+                <div class="card-body">
+                    <h5 class="card-title">About Me!</h5>
+                    <p class="card-text"><%= user.about %></p>
+                    <% if((currentUser && user._id.equals(currentUser._id)) || (currentUser && currentUser.isAdmin)){ %>
+                    <a class="btn btn-warning" href="/users/<%=user._id%>/edit">Edit</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-6">
+            <h2 id="user-profile" class="font-monospace text-center"><%= user.username %>'s Posts</h2>
+            <hr>
+            <div class="post-card card mt-4">
+                <div class="card-body">
+                    <% if(user.posts.length < 1){ %>
+                    <p class="card-text fst-italic">User has not made any posts yet</p>
+                    <% } %>
+                    <% for(let post of user.posts){ %>
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="/posts/<%= post.type %>/<%= post.id %>"
+                                class="btn btn-sm btn-primary float-end">Visit</a>
+                            <h5 class="card-title"><a href="/posts/<%= post.type %>/<%= post.id %>"
+                                    class="text-decoration-none"><%= post.title %></a></h5>
+                            <p class="card-text"><a class="text-decoration-none"
+                                    href="/posts/<%= post.type %>"><%= post.type %></a>, Posted at:
+                                <%= post.date.toDateString() %></p>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/scripts/user.js"></script>
+<%- include('../partials/footer'); -%>

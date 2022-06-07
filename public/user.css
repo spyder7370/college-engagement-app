@@ -1,0 +1,17 @@
+.user-card {
+    width: 70%;
+    margin: auto;
+}
+
+.post-card {
+    width: 80%;
+    margin: auto;
+}
+
+.user-card .card-img-top {
+    position: inherit;
+    background-size: cover;
+    background-position: center;
+    height: auto;
+    width: auto;
+}

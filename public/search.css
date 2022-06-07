@@ -1,0 +1,40 @@
+.search_div{
+    margin-top: 2rem;
+display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+div.search-bar input[type=text]
+{
+    margin-left: 15px;
+    padding: 4px;
+    font-size: 16px;
+    border: 2px solid black;
+    float: left;
+    background: #fffdfd;
+    border-radius: 6px;
+}
+.search-bar button
+{
+    width: 34px;
+    height: 30px;
+    border: none;
+    /* left: calc(100% - 55px); */
+    background:white;
+}
+.title p
+{
+  text-align: center;
+  color: #172e81;
+  line-height: 1.5;
+  font-size: 36px;
+}
+.all_cards
+{
+    display: flex;
+    justify-content: space-around;
+}
+.User-Detail p
+{
+    text-align: center;
+}
