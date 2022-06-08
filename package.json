@@ -21,6 +21,7 @@
     "express-session": "^1.17.2",
     "locus": "^2.0.4",
     "method-override": "^3.0.0",
+    "moment": "^2.29.3",
     "mongoose": "^6.2.10",
     "mongoose-paginate-v2": "^1.6.3",
     "multer": "^1.4.5-lts.1",

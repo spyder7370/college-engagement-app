@@ -88,7 +88,62 @@
     </div>
 
     <!-- MOST RECENT POSTS -->
-    <% if (interview || notice || blogs.length>0) { %>
+    <div class="container recent-container">
+        <h2 class="font-monospace recent-heading">What's New</h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <% if (interview) { %>
+                <div class="card mb-5">
+                    <img src="<%=interview.image%>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title mt-2"><%= interview.title %></h5>
+                        <p class="card-text"><%= interview.content.slice(0,80) %> . . .</p>
+                        <a href="/posts/interview-experience" class="btn btn-sm btn-primary">Read More...</a>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <div class="col-lg-8">
+                <div class="row right-row">
+                    <% for( let blog of blogs ) { %>
+                    <div class="col-lg-6">
+                        <div class="card mb-5">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="<%= blog.image %>" class="img-fluid" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= blog.title %></h5>
+                                        <p class="card-text"><%= blog.content.slice(0,80) %> . . .</p>
+                                        <a href="/posts/blog" class="btn btn-sm btn-primary">Read More...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="col-lg-12 mt-2">
+                        <% if (notice) { %>
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <h5 class="card-title"><%= notice.title %></h5>
+                                <p class="card-text"><%= notice.content.slice(0,250) %> . . .</p>
+                                <a href="/posts/notice" class="btn btn-primary btn-sm">Read More...</a>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- <% if (interview || notice || blogs.length>0) { %>
     <div class="row d-flex flex-column justify-content-center" id="main_box">
         <% if (interview) { %>
         <div class="col-lg-4 col-md-12 first-part">
@@ -121,19 +176,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="card text-dark">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= blog.title %></h5>
-                            <p class="card-text"><%= blog.content.slice(0,30) %> . . .</p>
-                            <a href="/posts/blog" class="btn btn-primary">Read More...</a>
-                        </div>
-                    </div> -->
                 </div>
                 <% } %>
             </div>
 
             <% if (notice) { %>
-            <!-- <div class="col-lg-8"> -->
             <div class="card text-dark">
                 <div class="card-body p-4">
                     <h5 class="card-title"><%= notice.title %></h5>
@@ -141,11 +188,10 @@
                     <a href="/posts/notice" class="btn btn-primary">Read More...</a>
                 </div>
             </div>
-            <!-- </div> -->
             <% } %>
         </div>
     </div>
-    <% } %>
+    <% } %> -->
 
     <!-- NAVBAR COLOR CHANGE -->
     <script>

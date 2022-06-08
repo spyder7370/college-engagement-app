@@ -78,7 +78,8 @@
                 <% for(let comment of post.comments){ %>
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">By <%= comment.author.username %>
+                        <h6 class="card-subtitle mb-2 text-muted"><%= moment(comment.date).fromNow() %> by
+                            <%= comment.author.username %>
                         </h6>
                         <p class="card-title starability-result" data-rating="<%= comment.rating %>">
                             Rated: <%= comment.rating %> stars

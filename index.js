@@ -30,6 +30,7 @@ const authRoutes = require('./routes/auth'),
 const Post = require('./model/post'),
 	User = require('./model/user');
 
+app.locals.moment = require('moment');
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');

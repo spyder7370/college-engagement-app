@@ -58,17 +58,98 @@ module.exports.indexAll = async (req, res) => {
 
 module.exports.searchPost = async (req, res) => {
 	let { search, type } = req.query;
+	if (!search) search = '';
+	if (!type) type = 'post';
+	let url = `/posts?type=${type}&search=${search}`;
 	if ((!search && !type) || (!search && type === 'post')) {
-		const posts = await Post.find({ type: { $ne: 'notice' } }).populate('author');
+		// const posts = await Post.find({ type: { $ne: 'notice' } }).populate('author');
+		const posts = await Post.paginate(
+			{ type: { $ne: 'notice' } },
+			{
+				page: req.query.page || 1,
+				limit: 12,
+				sort: '-_id',
+				populate: 'author'
+			}
+		);
+		posts.page = Number(posts.page);
+		let totalPages = posts.totalPages;
+		let currentPage = posts.page;
+		let startPage;
+		let endPage;
+
+		if (totalPages <= 10) {
+			startPage = 1;
+			endPage = totalPages;
+		} else {
+			if (currentPage <= 6) {
+				startPage = 1;
+				endPage = 10;
+			} else if (currentPage + 4 >= totalPages) {
+				startPage = totalPages - 9;
+				endPage = totalPages;
+			} else {
+				startPage = currentPage - 5;
+				endPage = currentPage + 4;
+			}
+		}
 		const type = 'Post';
-		return res.render('posts/search', { posts, type });
+		return res.render('posts/search', {
+			posts,
+			type,
+			url,
+			startPage,
+			endPage,
+			currentPage,
+			totalPages
+		});
+		// return res.render('posts/search', { posts, type });
 	}
 	if (type === 'notice') {
 		if (!search) return res.redirect('/posts/notice');
 		else {
 			const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-			const posts = await Post.find({ title: regex, type: 'notice' }).populate('author');
-			return res.render('posts/index', { posts, type });
+			// const posts = await Post.find({ title: regex, type: 'notice' }).populate('author');
+			const posts = await Post.paginate(
+				{ title: regex, type: 'notice' },
+				{
+					page: req.query.page || 1,
+					limit: 12,
+					sort: '-_id',
+					populate: 'author'
+				}
+			);
+			posts.page = Number(posts.page);
+			let totalPages = posts.totalPages;
+			let currentPage = posts.page;
+			let startPage;
+			let endPage;
+
+			if (totalPages <= 10) {
+				startPage = 1;
+				endPage = totalPages;
+			} else {
+				if (currentPage <= 6) {
+					startPage = 1;
+					endPage = 10;
+				} else if (currentPage + 4 >= totalPages) {
+					startPage = totalPages - 9;
+					endPage = totalPages;
+				} else {
+					startPage = currentPage - 5;
+					endPage = currentPage + 4;
+				}
+			}
+			return res.render('posts/index', {
+				posts,
+				type,
+				url,
+				startPage,
+				endPage,
+				currentPage,
+				totalPages
+			});
+			// return res.render('posts/index', { posts, type });
 		}
 	}
 
@@ -77,12 +158,90 @@ module.exports.searchPost = async (req, res) => {
 		newType = { $ne: 'notice' };
 	}
 	if (!search) {
-		const posts = await Post.find({ type: newType }).populate('author');
-		return res.render('posts/search', { posts, type });
+		// const posts = await Post.find({ type: newType }).populate('author');
+		const posts = await Post.paginate(
+			{ type: newType },
+			{
+				page: req.query.page || 1,
+				limit: 12,
+				sort: '-_id',
+				populate: 'author'
+			}
+		);
+		posts.page = Number(posts.page);
+		let totalPages = posts.totalPages;
+		let currentPage = posts.page;
+		let startPage;
+		let endPage;
+
+		if (totalPages <= 10) {
+			startPage = 1;
+			endPage = totalPages;
+		} else {
+			if (currentPage <= 6) {
+				startPage = 1;
+				endPage = 10;
+			} else if (currentPage + 4 >= totalPages) {
+				startPage = totalPages - 9;
+				endPage = totalPages;
+			} else {
+				startPage = currentPage - 5;
+				endPage = currentPage + 4;
+			}
+		}
+		return res.render('posts/search', {
+			posts,
+			type,
+			url,
+			startPage,
+			endPage,
+			currentPage,
+			totalPages
+		});
+		// return res.render('posts/search', { posts, type });
 	} else {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		const posts = await Post.find({ title: regex, type: newType }).populate('author');
-		return res.render('posts/search', { posts, type });
+		// const posts = await Post.find({ title: regex, type: newType }).populate('author');
+		const posts = await Post.paginate(
+			{ title: regex, type: newType },
+			{
+				page: req.query.page || 1,
+				limit: 12,
+				sort: '-_id',
+				populate: 'author'
+			}
+		);
+		posts.page = Number(posts.page);
+		let totalPages = posts.totalPages;
+		let currentPage = posts.page;
+		let startPage;
+		let endPage;
+
+		if (totalPages <= 10) {
+			startPage = 1;
+			endPage = totalPages;
+		} else {
+			if (currentPage <= 6) {
+				startPage = 1;
+				endPage = 10;
+			} else if (currentPage + 4 >= totalPages) {
+				startPage = totalPages - 9;
+				endPage = totalPages;
+			} else {
+				startPage = currentPage - 5;
+				endPage = currentPage + 4;
+			}
+		}
+		return res.render('posts/search', {
+			posts,
+			type,
+			url,
+			startPage,
+			endPage,
+			currentPage,
+			totalPages
+		});
+		// return res.render('posts/search', { posts, type });
 	}
 
 	res.send(req.query);
@@ -231,6 +390,7 @@ module.exports.updatePost = async (req, res) => {
 		} else {
 			// normal update
 		}
+		req.body.post.date = Date.now();
 		const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
 		req.flash('success', 'Successfully updated the post');
 		res.redirect(`/posts/${type}/${id}`);

@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="text-center font-monospace my-3 text-uppercase">All <%= type %>s </h1>
     <div class="row">
-        <% if (posts.length === 0) { %>
+        <% if (posts.docs.length === 0) { %>
         <h3>Nothing to show here</h3>
         <div class="row">
             <div class="col-sm-12 col-lg-8 offset-lg-2 ">
@@ -39,14 +39,15 @@
                 </form>
             </div>
         </div>
-        <% for( let post of posts ) { %>
+        <%- include('../partials/searchPaginate')%>
+        <% for( let post of posts.docs ) { %>
         <div class="col-12 col-sm-8 col-md-6 col-lg-4">
             <div class="card mb-3">
                 <img class="card-img" src="<%= post.image %>" alt="">
                 <div class="card-body">
                     <h4 class="card-title"><%= post.title %></h4>
                     <small class="text-muted cat">
-                        <i class="far fa-clock text-info"></i> 30 minutes
+                        <i class="far fa-clock text-info"></i> <%= moment(post.date).fromNow() %>
                     </small>
                     <small class="text-muted cat">
                         <i class="fa-solid fa-filter text-info"></i>
@@ -66,6 +67,7 @@
             </div>
         </div>
         <% } %>
+        <%- include('../partials/searchPaginate')%>
         <% } %>
     </div>
 </div>

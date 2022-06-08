@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/notice.css">
 <div class="container">
     <h1 class="text-center font-monospace mt-3 text-uppercase">All <%= type %>s </h1>
-    <% if (posts.length === 0) { %>
+    <% if (posts.docs.length === 0) { %>
     <h3>Nothing to show here</h3>
     <% } else { %>
     <%- include('../partials/paginate')%>
@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><%= post.title %></h4>
                     <small class="text-muted cat">
-                        <i class="far fa-clock text-info"></i> 30 minutes
+                        <i class="far fa-clock text-info"></i> <%= moment(post.date).fromNow() %>
                     </small>
                     <small class="text-muted cat">
                         <i class="fa-solid fa-filter text-info"></i>
